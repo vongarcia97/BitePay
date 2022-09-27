@@ -23,10 +23,6 @@ const {
 
 const server = createServer(app);
 
-
-
-
-
 app.use(express.json());
 app.use(express.urlencoded( {extended: true }));
 app.use(cors());
@@ -61,7 +57,6 @@ io.on("connection", (socket) => {
     } else {
       console.log('server error: missing data from event joinTable');
     }
-
   });
 
   socket.on('userUpdate', (data) => {
