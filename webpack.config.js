@@ -51,6 +51,10 @@ module.exports = {
     proxy: {
       '/api/**': 'http://localhost:3000/',
     },
+    client: {
+      webSocketTransport: 'ws',
+    },
+    webSocketServer: 'ws',
     static: {
       directory: path.join(__dirname, 'dist'),
       publicPath: '/dist'
