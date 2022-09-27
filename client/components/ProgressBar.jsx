@@ -12,14 +12,9 @@ export default function ProgressBar ({tableMembers}) {
     setProgress(progress);
   }, [tableMembers])
 
-          /* <div className="m-4 w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
-            <div className="h-6 px-1 bg-green-600 text-right text-sm rounded-full dark:bg-green-500" style={{width: `${progress}%`}}>{progress}% COMPLETE! </div>
-          </div>  */
-
   const progressBar = (progress) => {
     if (progress === 100) {
       return (
-
           <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
             <div className="bg-green-600 text-xs font-medium text-green-100 text-center p-0.5 leading-none rounded-full" style={{width: `${progress}%`}}> {progress}% COMPLETE! </div>
           </div>

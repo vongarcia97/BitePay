@@ -1,5 +1,5 @@
 {
-  "name": "gozobram---development",
+  "name": "bitepay-development",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -43,6 +43,7 @@
     "react-router-dom": "^6.3.0",
     "socket.io": "^4.5.2",
     "socket.io-client": "^4.5.2",
-    "tailwindcss": "^2.2.19"
+    "tailwindcss": "^2.2.19",
+    "webpack-remove-debug": "^0.1.0"
   }
 }

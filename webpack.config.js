@@ -4,7 +4,7 @@ const { SourceMapDevToolPlugin } = require('webpack');
 
 
 module.exports = {
-  mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV || 'production',
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'dist'),
@@ -14,7 +14,6 @@ module.exports = {
     new HtmlWebpackPlugin({ template: 'index.html' }),
     new SourceMapDevToolPlugin({ filename: '[file].map' })
   ],
-  target: "node",
   externals: {
     bufferutil: "bufferutil",
     "utf-8-validate": "utf-8-validate",
@@ -30,6 +29,11 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'webpack-remove-debug'
       },
       {
         test: /\.css?/i,
