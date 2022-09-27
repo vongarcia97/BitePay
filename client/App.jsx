@@ -21,10 +21,11 @@ export default function App() {
     myItems: [],
     tip: 15,
     total: 0,
-    status: 'PENDING',
+    status: 'PROCESSING',
   });
 
   const [tableMembers, setTableMembers] = useState([]);
+  const [joinedTable, setJoinedTable] = useState(false);
 
   useEffect(() => {
     console.log(`rerendered within useEffect in App.jsx with user: ${{user}} and tableMembers: ${{tableMembers}}`);
@@ -39,9 +40,21 @@ export default function App() {
       setUser({...user, id: data});
     })
 
+    // server-side automatically sends 'tableMembers' event once connection is established with data containing all table members.
     socket.on('tableMembers', (data) => {
+      // update the tableMembers array
+      /* setTableMembers((prevTableMembers) => {
+        return prevTableMembers.map((member) => {
+          if (member.id === data.id) {
+            return data;
+          } else {
+            return member;
+          }
+        })
+      }); */
       setTableMembers([...data.slice()]);
       console.log('updated tableMembers: ', tableMembers);
+      setJoinedTable(true);
     })
 
     socket.on('tableMemberUpdate', (data) => {
@@ -49,33 +62,55 @@ export default function App() {
 
       // check if data coming back is the current user's data
       if (data.id === user.id) {
+        console.log('THIS user data updated', user, data);
         // if so, update the user's data
         setUser({...user, myItems: data.myItems, tip: data.tip, total: data.total, status: data.status});
       }
 
-      // update tableMembers using map()
-      const updatedData = tableMembers.map((member) => {
-        // if the member's id matches the data's id, update the member's data else keep the member's data the same
-        if (member.id === data.id) {
-          return data;
-        } else {
-          return member;
-        }
+      // update the tableMembers array
+      setTableMembers((prevTableMembers) => {
+        return prevTableMembers.map((member) => {
+          if (member.id === data.id) {
+            return data;
+          } else {
+            return member;
+          }
+        })
       });
-      console.log('after tableMembers.map():   updatedData=', updatedData);
-      // update tableMembers with hook
-      setTableMembers([...updatedData]);
     });
+
+    // update the tableMembers array when a user leaves the table
+    socket.on('userLeft', (data) => {
+      console.log('this user has left the table:  ', data);
+      setTableMembers((prevTableMembers) => {
+        return prevTableMembers.filter((member) => {
+          return member.id !== data.id;
+        })
+      });
+    })
 
     return () => {
       socket.off('connect');
       socket.off('setId');
       socket.off('tableMembers');
       socket.off('tableMemberUpdate');
+      socket.off('userLeft');
     };
 
 
   }, [tableMembers]); // set tableMembers as dependency to re-render useEffect when there is a socket event updating the data
+
+  const joinTable = (user) => {
+    socket.emit('joinTable', user);
+  }
+
+  const userAddItem = (user, payload) => {
+    socket.emit('userUpdate', {user, payload});
+  }
+
+  const userDeleteItem = (user, payload) => {
+    socket.emit('userDeleteItem', {user, payload});
+  };
 
   return (
     <Router>
@@ -85,6 +120,7 @@ export default function App() {
         element={<Home
         user={user}
         setUser={setUser}
+        joinTable={joinTable}
         />
         }>
         </Route>
@@ -96,14 +132,17 @@ export default function App() {
         socket={socket}
         tableMembers={tableMembers}
         setTableMembers={setTableMembers}
+        joinTable={joinTable}
+        userAddItem={userAddItem}
+        userDeleteItem={userDeleteItem}
         />
         }>
         </Route>
         <Route
         exact path={`/FinalBill`}
         element={<FinalBill
-        socket={socket}
         tableMembers={tableMembers}
+        user={user}
         />
         }>
         </Route>

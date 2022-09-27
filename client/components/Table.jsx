@@ -8,14 +8,28 @@ import ProgressBar from './ProgressBar';
 
 
 
-export default function Table ({user, setUser, socket, tableMembers}) {
+export default function Table ({user, setUser, socket, tableMembers, joinTable, userAddItem, userDeleteItem}) {
 
   const [ready, setReady] = useState(false);
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
-    socket.emit('joinTable', user);
+    if (!joined) {
+      socket.emit('joinTable', user);
+      setJoined(true);
+    }
 
-  }, [])
+    if (user.status === 'READY') {
+      setReady(true);
+    } else if (user.status === 'PROCESSING') {
+      setReady(false);
+    }
+    
+    return () => {
+      socket.off('joinTable');
+    }
+
+  }, [joined]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -24,6 +38,7 @@ export default function Table ({user, setUser, socket, tableMembers}) {
       socket.emit('userUpdateStatus', {...user, status: 'PROCESSING'});
     }
     else {
+      e.preventDefault();
       setReady(true);
       socket.emit('userUpdateStatus', {...user, status: 'READY'});
     }
@@ -59,9 +74,9 @@ export default function Table ({user, setUser, socket, tableMembers}) {
   return (
     <section>
       <ProgressBar tableMembers={tableMembers}/>
-      <TableListView tableMembers={tableMembers} />
-      <IndividualBillView user={user} socket={socket}/>
-      <AddItemForm user={user} socket={socket} />
+      <TableListView tableMembers={tableMembers} user={user} />
+      <IndividualBillView user={user} userDeleteItem={userDeleteItem} ready={ready}/>
+      <AddItemForm user={user} /* socket={socket} */ userAddItem={userAddItem} />
       <FinalView user={user} setUser={setUser} />
       {statusButton()}
     </section>

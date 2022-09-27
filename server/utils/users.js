@@ -11,16 +11,19 @@ user = {
 }
 */
 
-async function createUser(id, username, tableID, myItems, tip, total, status) {
+function getCurrentUser(id, tableID) {
+  return users.find((user) => user.id === id && user.tableID === tableID);
+}
+
+
+function createUser(id, username, tableID, myItems, tip, total, status) {
+
   const user = { id, username, tableID, myItems, tip, total, status };
   users.push(user);
 
   return user;
 }
 
-function getCurrentUser(id, tableID) {
-  return users.find((user) => user.id === id && user.tableID === tableID);
-}
 
 /* Create a function that will update user's items */
 function userUpdate(user, payload) {
@@ -58,8 +61,8 @@ function userDeleteItem(user, payload) {
 
 
 /* Remove user from memory and return that user. Make sure you are altering the global array that is acting as memory to store our users. */
-function userLeft(id) {
-  const index = users.findIndex((user) => user.id === id);
+function userLeft(userId) {
+  const index = users.findIndex((user) => user.id === userId);
 
   if (index !== -1) return users.splice(index, 1)[0]; // return user object
 }

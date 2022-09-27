@@ -19,7 +19,7 @@ export default function FinalView({user, setUser}) {
 
   return (
     <section className="container mx-auto p-4 font-mono">
-        <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg bg-gray-100 uppercase border-b border-gray-100">
+        <div className="w-full mb-.5 overflow-hidden rounded-lg shadow-lg bg-gray-100 uppercase border-b border-gray-100">
             <header className="px-5 py-4 border-b border-gray-100">
                 <h2 className="font-semibold text-gray-800">
                     {user.username}'S FINAL BILL
@@ -46,9 +46,18 @@ export default function FinalView({user, setUser}) {
                                 <td className="p-2 whitespace-nowrap">
                                     <div className="text-left text-sm text-green-500">TIP:</div>
                                 </td>
-                                <td className="p-2 whitespace-nowrap">
+                                {user.status === 'READY' ? 
+                                    <td className="p-2 whitespace-nowrap">
+                                        <input id="tip-scale" type="range" min={15} max={30} step={.5} value={user.tip} disabled={true} onChange={(e) => handleTipChange(e)} />
+                                    </td>
+                                 : 
+                                    <td className="p-2 whitespace-nowrap">
+                                        <input id="tip-scale" type="range" min={15} max={30} step={.5} value={user.tip} onChange={(e) => handleTipChange(e)} />
+                                    </td>
+                                }
+                                {/* <td className="p-2 whitespace-nowrap">
                                     <input id="tip-scale" type="range" min={15} max={30} step={.5} value={user.tip} onChange={(e) => handleTipChange(e)} />
-                                </td>
+                                </td> */}
                                 <td className="p-2 whitespace-nowrap">
                                     <div className="text-sm text-center  text-green-500">{user.tip} %</div>
                                 </td>

@@ -50,19 +50,21 @@ io.on("connection", (socket) => {
   socket.emit('setId', socket.id);
 
   socket.on('joinTable', async (data) => {
-    const user = await createUser(data.id , data.username, data.tableID, data.myItems, data.tip, data.total, data.status);
-    socket.join(user.tableID);
-    console.log('joined table', user.tableID, user);
+    if (data.id && data.tableID && data.username) {
+      const checkUser = getCurrentUser(data.id, data.tableID);
+      if (!checkUser) {
+        const user = await createUser(data.id , data.username, data.tableID, data.myItems, data.tip, data.total, data.status);
+        socket.join(user.tableID);
+        console.log('joined table', user.tableID, user);
+        io.to(user.tableID).emit('tableMembers', getTableMembers(user.tableID));
+      } else {
+        console.log('user already exists:  ,', checkUser, 'no need to create');
+      }
+    } else {
+      console.log('server error: missing data from event joinTable');
+    }
 
-    io.to(data.tableID).emit('tableMembers', getTableMembers(user.tableID));
   });
-
-
-  socket.on('test', (data) => {
-    const response = getCurrentUser(data.id, data.tableID);
-    console.log('test', response);
-    io.to(data.tableID).emit('response', response);
-  })
 
   socket.on('userUpdate', (data) => {
     console.log('server received userUpdate event with data: ', data);
@@ -90,7 +92,13 @@ io.on("connection", (socket) => {
     io.to(user.tableID).emit('tableMemberUpdate', updateAction);
   });
 
-
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+    const user = userLeft(socket.id);
+    if (user) {
+      io.to(user.tableID).emit('tableMembers', getTableMembers(user.tableID));
+    }
+  });
 });
 
 

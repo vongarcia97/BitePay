@@ -51,7 +51,7 @@ export default function ProgressBar ({tableMembers}) {
 
   return (
     <section className="container mx-auto p-4 font-mono">
-      <div className="w-full flex items-center justify-between mb-8 overflow-hidden rounded-lg shadow-lg bg-gray-100 uppercase border-b border-gray-100">
+      <div className="w-full flex items-center justify-between mb-.5 overflow-hidden rounded-lg shadow-lg bg-gray-100 uppercase border-b border-gray-100">
           {progressBar(progress)}
         <div id="final-bill-button" className='p-2'>
           {finalBillButton(progress)}
