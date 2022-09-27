@@ -6,12 +6,12 @@ import Home from './components/Home.jsx';
 import Table from './components/Table.jsx';
 import FinalBill from './components/FinalBill.jsx';
 
-const socket = io('http://localhost:3000/', { transports: ['websocket'] });
+
+
+
+const socket = io('https://bitepay.herokuapp.com/', { transports: ['websocket'] });
+
 const SocketContext = React.createContext();
-
-
-
-
 
 export default function App() {
 
