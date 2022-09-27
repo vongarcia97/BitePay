@@ -2,17 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 export default function FinalView({user, setUser}) {
 
-/*   useEffect(() => {
-    const tipScale = document.getElementById('tip-scale');
-    setUser({...user, tip: tipScale.value});
-
-    return () => {
-      console.log('unmounted FinalView');
-      setUser({...user, tip: tipScale.value});
-    }
-    
-  }, []) */
-
   const handleTipChange = (e) => {
     setUser({...user, tip: parseInt(e.target.value)});
   }

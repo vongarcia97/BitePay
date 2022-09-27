@@ -14,6 +14,11 @@ module.exports = {
     new HtmlWebpackPlugin({ template: 'index.html' }),
     new SourceMapDevToolPlugin({ filename: '[file].map' })
   ],
+  target: "node",
+  externals: {
+    bufferutil: "bufferutil",
+    "utf-8-validate": "utf-8-validate",
+  },
   module: {
     rules: [
       {
@@ -39,10 +44,6 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.jsx', '.js', '.json'],
   },
   devServer: {
-    client:{
-      webSocketTransport: 'ws'
-    },
-    webSocketServer: 'ws',
     proxy: {
       '/api/**': 'http://localhost:3000/',
     },

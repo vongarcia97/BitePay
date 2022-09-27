@@ -3,7 +3,6 @@ import React, {useState, useEffect} from "react";
 export default function IndividualBillView({ user, userDeleteItem, ready }) {
 
     const handleDelete = (user, payload) => {
-        console.log('sending delete request to server for item: ', payload);
         userDeleteItem(user, payload);
     }
 

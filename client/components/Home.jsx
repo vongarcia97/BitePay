@@ -8,7 +8,6 @@ export default function Home ({user, setUser}) {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    console.log('logged state: ', user);
     navigate(`/Table`);
   }
 
