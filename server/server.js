@@ -1,5 +1,3 @@
-// install all of the modules we will need
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");

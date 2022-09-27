@@ -6,8 +6,11 @@ import Home from './components/Home.jsx';
 import Table from './components/Table.jsx';
 import FinalBill from './components/FinalBill.jsx';
 
+const socket = io('http://localhost:3000', { transports: ['websocket'] });
+const SocketContext = React.createContext();
 
-const socket = io.connect('http://localhost:3000');
+
+
 
 
 export default function App() {
@@ -25,6 +28,7 @@ export default function App() {
   const [tableMembers, setTableMembers] = useState([]);
 
   useEffect(() => {
+
     socket.on('connect', () => {
       console.log('connected to server');
     })
@@ -86,40 +90,42 @@ export default function App() {
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route
-        exact path='/'
-        element={<Home
-        user={user}
-        setUser={setUser}
-        joinTable={joinTable}
-        />
-        }>
-        </Route>
-        <Route
-        exact path={`/Table`}
-        element={<Table
-        user={user}
-        setUser={setUser}
-        socket={socket}
-        tableMembers={tableMembers}
-        setTableMembers={setTableMembers}
-        joinTable={joinTable}
-        userAddItem={userAddItem}
-        userDeleteItem={userDeleteItem}
-        />
-        }>
-        </Route>
-        <Route
-        exact path={`/FinalBill`}
-        element={<FinalBill
-        tableMembers={tableMembers}
-        user={user}
-        />
-        }>
-        </Route>
-      </Routes>
-    </Router>
+    <SocketContext.Provider value={socket}>
+      <Router>
+        <Routes>
+          <Route
+          exact path='/'
+          element={<Home
+          user={user}
+          setUser={setUser}
+          joinTable={joinTable}
+          />
+          }>
+          </Route>
+          <Route
+          exact path={`/Table`}
+          element={<Table
+          user={user}
+          setUser={setUser}
+          socket={socket}
+          tableMembers={tableMembers}
+          setTableMembers={setTableMembers}
+          joinTable={joinTable}
+          userAddItem={userAddItem}
+          userDeleteItem={userDeleteItem}
+          />
+          }>
+          </Route>
+          <Route
+          exact path={`/FinalBill`}
+          element={<FinalBill
+          tableMembers={tableMembers}
+          user={user}
+          />
+          }>
+          </Route>
+        </Routes>
+      </Router>
+    </SocketContext.Provider>
   )
 }
