@@ -5,8 +5,6 @@ const cors = require("cors");
 const path = require("path");
 const {createServer} = require("http");
 const { Server } = require("socket.io");
-const mongoose = require("mongoose");
-const { User, Table } = require("./models/mongooseModel");
 require('dotenv').config();
 // IMPORT all of the modules and libraries we will need
 const app = express();
@@ -123,39 +121,4 @@ app.use((err, req, res, next) => {
 server.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
-
-
-//connect to db
-/* 
-mongoose.connect("mongodb+srv://admin:list5V9rake@cluster0.vwvfcj7.mongodb.net/?retryWrites=true&w=majority");
-
-const connection = mongoose.connection;
-
-
-connection.once("open", () => {
-  console.log("MongoDB database connected");
-
-  console.log("Setting change streams");
-  const usersCollectionStream = User.watch();
-  const tablesCollectionStream = Table.watch();
-
-  usersCollectionStream.on("change", (change) => {
-    switch (change.operationType) {
-      case "insert":
-        const userPayload = {
-          _id: change.fullDocument._id,
-          username: change.fullDocument.item,
-          table_id: change.fullDocument.table_id
-        };
-
-        io.emit("newUser", userPayload);
-        break;
-
-      case "delete":
-        io.emit("userLeft", change.documentKey._id);
-        break;
-    }
-  });
-});
- */
 module.exports = app
