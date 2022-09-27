@@ -21,7 +21,6 @@ const {
   userLeft,
 } = require("./utils/users");
 
-const server = createServer(app);
 
 app.use(express.json());
 app.use(express.urlencoded( {extended: true }));
@@ -33,6 +32,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:8080"
