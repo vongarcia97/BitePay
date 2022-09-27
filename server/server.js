@@ -28,22 +28,21 @@ app.use(cors());
 
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-});
 
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000/",
-    methods: ["GET", "POST"],
+    origins: ["https://bitepay.herokuapp.com/", "http://localhost:8080/"],
   }
+});
+app.get('/', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
 io.on("connection", (socket) => {
   console.log('connected to ws server', socket.id);
   socket.emit('setId', socket.id);
-
+  
   socket.on('joinTable', async (data) => {
     if (data.id && data.tableID && data.username) {
       const checkUser = getCurrentUser(data.id, data.tableID);
