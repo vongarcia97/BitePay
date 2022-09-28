@@ -11,7 +11,6 @@ import FinalBill from './components/FinalBill.jsx';
 
 const socket = io('https://bitepay.herokuapp.com/', { transports: ['websocket'] });
 
-const SocketContext = React.createContext();
 
 export default function App() {
 
@@ -66,12 +65,16 @@ export default function App() {
       });
     })
 
+    socket.on('disconnect', () => {
+    });
+
     return () => {
       socket.off('connect');
       socket.off('setId');
       socket.off('tableMembers');
       socket.off('tableMemberUpdate');
       socket.off('userLeft');
+      socket.off('disconnect');
     };
 
 
@@ -90,42 +93,39 @@ export default function App() {
   };
 
   return (
-    <SocketContext.Provider value={socket}>
-      <Router>
-        <Routes>
-          <Route
-          exact path='/'
-          element={<Home
-          user={user}
-          setUser={setUser}
-          joinTable={joinTable}
-          />
-          }>
-          </Route>
-          <Route
-          exact path={`/Table`}
-          element={<Table
-          user={user}
-          setUser={setUser}
-          socket={socket}
-          tableMembers={tableMembers}
-          setTableMembers={setTableMembers}
-          joinTable={joinTable}
-          userAddItem={userAddItem}
-          userDeleteItem={userDeleteItem}
-          />
-          }>
-          </Route>
-          <Route
-          exact path={`/FinalBill`}
-          element={<FinalBill
-          tableMembers={tableMembers}
-          user={user}
-          />
-          }>
-          </Route>
-        </Routes>
-      </Router>
-    </SocketContext.Provider>
+    <Router>
+      <Routes>
+        <Route
+        exact path='/'
+        element={<Home
+        user={user}
+        setUser={setUser}
+        joinTable={joinTable}
+        />
+        }>
+        </Route>
+        <Route
+        exact path="/Table"
+        element={<Table
+        user={user}
+        setUser={setUser}
+        socket={socket}
+        tableMembers={tableMembers}
+        setTableMembers={setTableMembers}
+        userAddItem={userAddItem}
+        userDeleteItem={userDeleteItem}
+        />
+        }>
+        </Route>
+        <Route
+        exact path="/FinalBill"
+        element={<FinalBill
+        tableMembers={tableMembers}
+        user={user}
+        />
+        }>
+        </Route>
+      </Routes>
+    </Router>
   )
 }

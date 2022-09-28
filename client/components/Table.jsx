@@ -8,7 +8,7 @@ import ProgressBar from './ProgressBar';
 
 
 
-export default function Table ({user, setUser, socket, tableMembers, joinTable, userAddItem, userDeleteItem}) {
+export default function Table ({user, setUser, socket, tableMembers, userAddItem, userDeleteItem}) {
 
   const [ready, setReady] = useState(false);
   const [joined, setJoined] = useState(false);

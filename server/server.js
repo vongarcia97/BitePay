@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origins: ["https://bitepay.herokuapp.com/", "http://localhost:8080/"],
+    origin: "https://bitepay.herokuapp.com/",
   }
 });
 app.get('/', (req, res) => {
