@@ -12,7 +12,7 @@ export default function AddItemForm({user, /* socket */ userAddItem}) {
         if (itemQuantity === 0) {
             alert("Don't forget to add quantity!");
         }
-        else if (typeof itemPrice !== 'number') {
+        else if (itemPrice <= 0) {
             alert("Please enter a valid price");
         }
         else if (itemName != "" && itemPrice > 0 && itemQuantity > 0) {
