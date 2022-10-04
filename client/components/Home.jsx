@@ -10,7 +10,6 @@ export default function Home ({user, setUser, joinTable}) {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    console.log(user);
     if (user.tableID > 0) {
       joinTable(user);
       navigate(`/Table`);
@@ -22,7 +21,6 @@ export default function Home ({user, setUser, joinTable}) {
   const generateUID = () => {
     let UID = Math.ceil(Math.random()*1000000000)
     setUser({...user, tableID: UID});
-    console.log(user);
   }
 
   return (

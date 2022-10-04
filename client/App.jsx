@@ -41,7 +41,6 @@ export default function App() {
     })
 
     socket.on('tableMemberUpdate', (data) => {
-      console.log('tableMemberUpdate:   ', data)
       if (data.id === user.id) {
         setUser({...user, myItems: data.myItems, tip: data.tip, total: data.total, status: data.status});
       }
