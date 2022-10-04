@@ -9,7 +9,7 @@ import FinalBill from './components/FinalBill.jsx';
 
 
 
-const socket = io('http://bitepay.herokuapp.com/', { transports: ['websocket'] });
+const socket = io('https://bitepay.herokuapp.com/', { transports: ['websocket'] });
 
 
 export default function App() {
