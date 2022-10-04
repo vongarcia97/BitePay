@@ -24,9 +24,15 @@ export default function Table ({user, setUser, socket, tableMembers, userAddItem
       setReady(true);
     }
 
+    socket.on('disconnect', () => {
+      alert('You have been disconnected from the server. Please return to the home page to rejoin your table.');
+      navigate(`/`);
+    });
+
     return () => {
       console.log('unmounting and setting status to NOT_READY');
       setReady(false);
+      socket.off('disconnect');
     }
 
   }, []);
