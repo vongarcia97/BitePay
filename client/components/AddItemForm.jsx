@@ -12,6 +12,9 @@ export default function AddItemForm({user, /* socket */ userAddItem}) {
         if (itemQuantity === 0) {
             alert("Don't forget to add quantity!");
         }
+        else if (typeof itemPrice !== 'number') {
+            alert("Please enter a valid price");
+        }
         else if (itemName != "" && itemPrice > 0 && itemQuantity > 0) {
             const itemID = Math.ceil(Math.random()*1000000000);
             const payload = {itemID, itemName, itemPrice, itemQuantity};
