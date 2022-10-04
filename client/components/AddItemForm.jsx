@@ -9,7 +9,10 @@ export default function AddItemForm({user, /* socket */ userAddItem}) {
 
     const handleClick = (e)=> {
         e.preventDefault();
-        if (itemName != "" && itemPrice > 0 && itemQuantity > 0) {
+        if (itemQuantity === 0) {
+            alert("Don't forget to add quantity!");
+        }
+        else if (itemName != "" && itemPrice > 0 && itemQuantity > 0) {
             const itemID = Math.ceil(Math.random()*1000000000);
             const payload = {itemID, itemName, itemPrice, itemQuantity};
             userAddItem(user, payload);
@@ -39,13 +42,23 @@ export default function AddItemForm({user, /* socket */ userAddItem}) {
                         $
                     </span>
                     </div>
-                    <input type="number" name="price" id="price" className="focus:ring-indigo-500 border-l border-b border-t border-gray-300 py-2 px-4 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm rounded-md" value={itemPrice} onChange={(e) => {setItemPrice(e.target.value)}}/>
+                    <input type="number" name="price" id="price" className="focus:ring-indigo-500 border-l border-b border-t border-gray-300 py-2 px-4 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm rounded-md" value={itemPrice} onChange={(e) => {
+                        if (e.target.value >= 0) {
+                            setItemPrice(e.target.value)
+                        }
+                    }}/>
                     <div className="absolute inset-y-0 right-0 flex items-center">
                         <label htmlFor="quantity" className="sr-only">
                         Quantity
                         </label>
                         <select id="Currency" name="quantity" className="focus:ring-indigo-500 py-2 px-4 border-t border-r border-gray-300 border-b bo focus:border-indigo-500 h-full pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-r-md" value={itemQuantity} onChange={(e) => {setItemQuantity(e.target.value)}}>
                             <option disabled={true} value={0}>QTY</option>
+                            <option value={1/3}>
+                                1/3
+                            </option>
+                            <option value={1/2}>
+                                1/2
+                            </option>
                             <option value={1}>
                                 1
                             </option>

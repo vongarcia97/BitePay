@@ -11,7 +11,7 @@ export default function FinalView({user, setUser}) {
         <div className="w-full mb-.5 overflow-hidden rounded-lg shadow-lg bg-gray-100 uppercase border-b border-gray-100">
             <header className="px-5 py-4 border-b border-gray-100">
                 <h2 className="font-semibold text-gray-800">
-                    {user.username}'S FINAL BILL
+                    MY FINAL BILL
                     </h2>
             </header>
             <div className="p-3">
@@ -56,7 +56,7 @@ export default function FinalView({user, setUser}) {
                                     <div className="text-left text-sm text-green-500">NY TAX:</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
-                                    <div className="text-left">----------------</div>
+                                    <div className="text-center">------------</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
                                     <div className="text-sm text-center  text-green-500">8.875%</div>
@@ -67,7 +67,7 @@ export default function FinalView({user, setUser}) {
                                     <div className="text-left text-sm text-green-500">FINAL TOTAL</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
-                                    <div className="text-left">----------------</div>
+                                    <div className="text-center">------------</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
                                     <div className="text-sm text-center  text-green-500">$ {

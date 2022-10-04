@@ -9,7 +9,7 @@ import FinalBill from './components/FinalBill.jsx';
 
 
 
-const socket = io('https://bitepay.herokuapp.com/', { transports: ['websocket'] });
+const socket = io('http://localhost:3000', { transports: ['websocket'] });
 
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
   const [user, setUser] = useState({
     id: '',
     username: '',
-    tableID: '',
+    tableID: 0,
     myItems: [],
     tip: 15,
     total: 0,
@@ -41,6 +41,7 @@ export default function App() {
     })
 
     socket.on('tableMemberUpdate', (data) => {
+      console.log('tableMemberUpdate:   ', data)
       if (data.id === user.id) {
         setUser({...user, myItems: data.myItems, tip: data.tip, total: data.total, status: data.status});
       }
@@ -66,6 +67,7 @@ export default function App() {
     })
 
     socket.on('disconnect', () => {
+      alert('you have been disconnected from server. Please re-join table via the home page');
     });
 
     return () => {
@@ -78,7 +80,7 @@ export default function App() {
     };
 
 
-  }, [tableMembers]); 
+  }, [/* tableMembers */ user]); 
 
   const joinTable = (user) => {
     socket.emit('joinTable', user);

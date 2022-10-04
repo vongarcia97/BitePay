@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://bitepay.herokuapp.com/",
+    origin: "http://localhost:8080",
   }
 });
 app.get('/', (req, res) => {
@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
   socket.emit('setId', socket.id);
   
   socket.on('joinTable', async (data) => {
+    console.log('received joinTable event: ', data);
     if (data.id && data.tableID && data.username) {
       const checkUser = getCurrentUser(data.id, data.tableID);
       if (!checkUser) {

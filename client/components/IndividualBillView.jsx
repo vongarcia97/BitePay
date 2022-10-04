@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from "react";
 
 export default function IndividualBillView({ user, userDeleteItem, ready }) {
-
+    
     const handleDelete = (user, payload) => {
         userDeleteItem(user, payload);
     }
-
 
   return (
     <section className="container mx-auto p-4 font-mono">
@@ -16,7 +15,7 @@ export default function IndividualBillView({ user, userDeleteItem, ready }) {
                 </h2>
                 <button
                 type="button"
-                className="inline-block w-auto py-4 px-2 bg-blue-600 rounded-lg text-sm text-white-100"
+                className="inline-block w-auto py-4 px-2 bg-blue-600 rounded-lg text-xs text-white-100"
                 onClick={() => {navigator.clipboard.writeText(user.tableID)}}
                 > COPY TABLE ID: {user.tableID}
                 </button>
@@ -33,7 +32,7 @@ export default function IndividualBillView({ user, userDeleteItem, ready }) {
                                     <div className="font-semibold text-left">Price</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Quantity</div>
+                                    <div className="font-semibold text-left">Qty</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
                                     <div className="font-semibold text-left"></div>
@@ -51,10 +50,10 @@ export default function IndividualBillView({ user, userDeleteItem, ready }) {
                                             </div>
                                         </td>
                                         <td className="p-2 whitespace-nowrap">
-                                            <div className="text-left font-medium text-green-500">{item.itemPrice}</div>
+                                            <div className="text-left font-medium text-green-500">$ {item.itemPrice}</div>
                                         </td>
                                         <td className="p-2 whitespace-nowrap">
-                                            <div className="text-left">{item.itemQuantity}</div>
+                                            <div className="text-left">{Math.round(100 * item.itemQuantity) / 100}</div>
                                         </td>
                                         <td className="p-2 whitespace-nowrap">
                                             <button
@@ -75,10 +74,10 @@ export default function IndividualBillView({ user, userDeleteItem, ready }) {
                                                 </div>
                                             </td>
                                             <td className="p-2 whitespace-nowrap">
-                                                <div className="text-left font-medium text-green-500">{item.itemPrice}</div>
+                                                <div className="text-left font-medium text-green-500">$ {item.itemPrice}</div>
                                             </td>
                                             <td className="p-2 whitespace-nowrap">
-                                                <div className="text-left">{item.itemQuantity}</div>
+                                                <div className="text-left">{Math.round(100 * item.itemQuantity) / 100}</div>
                                             </td>
                                             </tr>
                                         )
@@ -89,10 +88,10 @@ export default function IndividualBillView({ user, userDeleteItem, ready }) {
                                     <div className="text-left text-lg text-green-500">TOTAL: </div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
-                                    <div className="text-left">----------------</div>
+                                    <div className="text-left">----</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
-                                    <div className="text-lg text-center  text-green-500">{user.total}</div>
+                                    <div className="text-lg text-center  text-green-500">$ {Math.round(100 * user.total) / 100}</div>
                                 </td>
                             </tr>
                         </tbody>

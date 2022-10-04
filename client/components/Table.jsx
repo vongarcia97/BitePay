@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate} from 'react-router-dom';
 
 import TableListView from './TableListView';
 import IndividualBillView from './IndividualBillView';
@@ -10,26 +11,26 @@ import ProgressBar from './ProgressBar';
 
 export default function Table ({user, setUser, socket, tableMembers, userAddItem, userDeleteItem}) {
 
+  const navigate = useNavigate();
   const [ready, setReady] = useState(false);
-  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
-    if (!joined) {
-      socket.emit('joinTable', user);
-      setJoined(true);
+    if (user.tableID === 0) {
+      alert('You have been disconnected. Please return to the home page to rejoin your table.');
+      navigate(`/`);
     }
 
     if (user.status === 'READY') {
       setReady(true);
-    } else if (user.status === 'PROCESSING') {
-      setReady(false);
-    }
-    
-    return () => {
-      socket.off('joinTable');
     }
 
-  }, [joined]);
+    return () => {
+      console.log('unmounting and setting status to NOT_READY');
+      setReady(false);
+    }
+
+  }, []);
+
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -76,7 +77,7 @@ export default function Table ({user, setUser, socket, tableMembers, userAddItem
       <ProgressBar tableMembers={tableMembers}/>
       <TableListView tableMembers={tableMembers} user={user} />
       <IndividualBillView user={user} userDeleteItem={userDeleteItem} ready={ready}/>
-      <AddItemForm user={user} /* socket={socket} */ userAddItem={userAddItem} />
+      <AddItemForm user={user} userAddItem={userAddItem} />
       <FinalView user={user} setUser={setUser} />
       {statusButton()}
     </section>
