@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import { useNavigate } from 'react-router';
 import '../App.css';
-import BitePay_logo from '../assets/BitePay-logo.png';
 
 
 
@@ -32,7 +31,6 @@ export default function Home ({user, setUser, joinTable}) {
       >
         <div className="flex flex-col w-full">
           <div>
-            <img className="w-20 h-20 mx-auto" src={BitePay_logo} alt="BitePay_logo"/>
           </div>
           <h1 className="text-5xl text-gray-800 font-bold">BitePay</h1>
           <p className="w-5/12 mx-auto md:mx-0 text-gray-500">
