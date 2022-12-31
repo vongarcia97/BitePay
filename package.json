@@ -4,9 +4,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production node server/server.js",
-    "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack serve --open & nodemon server/server.js"
+    "start": "NODE_ENV=production node ./server/server.js",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js",
+    "dev": "NODE_ENV=development webpack serve --open & nodemon ./server/server.js",
+    "dev:hot": "NODE_ENV=development nodemon ./server/server.js & webpack-dev-server --open --hot",
+    "docker-dev:hot": "docker-compose -f docker-compose-dev-hot.yml up"
   },
   "keywords": [],
   "author": "",
@@ -23,11 +25,13 @@
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.19",
     "sass": "^1.54.9",
+    "socket.io-client": "^4.5.4",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.0"
+    "webpack-dev-server": "^4.11.0",
+    "webpack-remove-debug": "^0.1.0"
   },
   "dependencies": {
     "autoprefixer": "^10.4.10",
@@ -43,10 +47,8 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "socket.io": "^4.5.2",
-    "socket.io-client": "^4.5.2",
     "tailwindcss": "^2.2.19",
     "utf-8-validate": "^5.0.9",
-    "webpack-remove-debug": "^0.1.0",
     "ws": "^8.9.0"
   }
 }

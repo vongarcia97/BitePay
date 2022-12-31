@@ -7,10 +7,7 @@ import Table from './components/Table.jsx';
 import FinalBill from './components/FinalBill.jsx';
 
 
-
-
-const socket = io('https://bitepay.herokuapp.com/', { transports: ['websocket'] });
-
+const socket = io('http://localhost:3000', /* { transports: ['websocket', 'polling'] } */);
 
 export default function App() {
 

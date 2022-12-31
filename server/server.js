@@ -32,12 +32,10 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://bitepay.herokuapp.com/",
+    origin: "http://localhost:8080",
   }
 });
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-});
+
 
 io.on("connection", (socket) => {
   console.log('connected to ws server', socket.id);
@@ -95,7 +93,9 @@ io.on("connection", (socket) => {
   });
 });
 
-
+app.get('/', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
 
@@ -114,7 +114,7 @@ app.use((err, req, res, next) => {
 /**
  * start server
  */
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
 module.exports = app

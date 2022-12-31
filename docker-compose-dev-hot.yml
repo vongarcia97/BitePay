@@ -1,0 +1,10 @@
+version: "3"
+services:
+  dev:
+    image: "bitepay/production-dev"
+    container_name: "production-dev-hot"
+    ports: ["8080:8080"]
+    volumes: ["./:/usr/src/app", "node_modules:/usr/src/app/node_modules"]
+    command: ["npm", "run", "dev:hot"]
+volumes:
+  node_modules:
