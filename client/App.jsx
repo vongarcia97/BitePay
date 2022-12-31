@@ -7,7 +7,7 @@ import Table from './components/Table.jsx';
 import FinalBill from './components/FinalBill.jsx';
 
 
-const socket = io('http://localhost:3000', /* { transports: ['websocket', 'polling'] } */);
+const socket = io('http://bitepaynyc-env.eba-jjnppubt.us-east-1.elasticbeanstalk.com/', { transports: ['websocket'] });
 
 export default function App() {
 
