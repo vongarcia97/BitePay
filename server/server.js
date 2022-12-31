@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:8080",
+    origin: "http://bitepaynyc-env.eba-jjnppubt.us-east-1.elasticbeanstalk.com",
   }
 });
 
