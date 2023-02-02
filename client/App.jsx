@@ -7,7 +7,7 @@ import Table from './components/Table.jsx';
 import FinalBill from './components/FinalBill.jsx';
 
 
-const socket = io('http://bitepaynyc-env.eba-jjnppubt.us-east-1.elasticbeanstalk.com/', { transports: ['websocket'] });
+const socket = io('https://bitepay.xyz/', { transports: ['websocket'] });
 
 export default function App() {
 
