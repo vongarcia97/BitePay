@@ -63,7 +63,8 @@ export default function App() {
     })
 
     socket.on('disconnect', () => {
-      alert('you have been disconnected from server. Please re-join table via the home page');
+      alert("you have been disconnected from server. Please re-join your party's table via the home page.");
+      redirect('/');
     });
 
     return () => {
